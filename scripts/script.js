@@ -5,20 +5,30 @@ const user = {name: prompt('informe o seu nome por favor:')};
 const requisicao = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants',user);
 requisicao.then(resposta);
 const senha = setInterval(confirmarlogin, 5000);
+const chavesMensagens = setInterval(pegarMensagens, 1000);
 let objeto_teste = {} ;
 let lista_teste = {};
 
+document.addEventListener("keypress", function(e){
+    if(e.key == "Enter"){
+        enviarMensagem();
+    }
+});
+
+
 function deslogar(){
     clearInterval(senha);
+    clearInterval(chavesMensagens);
 }
 
 function confirmarlogin(){
     const confirm = axios.post('https://mock-api.driven.com.br/api/vm/uol/status',user);
-    console.log('usuario online...')
+    //console.log('usuario online...');
 }
 
 function resposta(response){
     console.log(`Servidor enviou resposta: ${response}`);
+    pegarMensagens();
 }
 
 function pegarMensagens(){
@@ -26,10 +36,10 @@ function pegarMensagens(){
     pedido_msg.then(exibirmensagens);
 }
 function exibirmensagens(response){
-    console.log('pegamos as mensagens');
+    //console.log('pegamos as mensagens');
     let Lista = response.data;
     let objeto = Lista[1];
-    console.log(response.data.length);
+    //console.log(response.data.length);
 
     objeto_teste = objeto;
     lista_teste = Lista;
@@ -40,7 +50,7 @@ function exibirmensagens(response){
     for(let cont = (Lista.length-1); cont>=0; cont--){
         tela.innerHTML += escreverMensagem(Lista[cont]);
     }
-    console.log('telha resetada');
+    //console.log('Mensagens atualizadas ...');
 }
 
 function Limpartela(){
@@ -67,11 +77,11 @@ function escreverMensagem(objeto){
     return texto;
 }
 
-function sinonimos(){
+function mandarCarta(mensagem){
 let carta = {
         from: user.name,
         to: "Todos",
-        text: "E nessa loucura de dizer que não te quero, Vou negando as aparências, Disfarçando as evidências Mas pra que viver fingindo Se eu não posso enganar meu coração? Eu sei que te amo!",
+        text: mensagem,
         type: "message" // ou "private_message" para o bônus
     };
 
@@ -83,4 +93,13 @@ let carta = {
 
 function fale(resposta){
     console.log(resposta);
+    pegarMensagens();
+}
+
+function enviarMensagem(){
+    console.log('enviando');
+    let texto = document.querySelector('.caixa_texto');
+    mandarCarta(texto.value);
+    texto.value = '';
+    console.log('mensagem enviada para o servidor');
 }

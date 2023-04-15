@@ -145,3 +145,7 @@ function enviarMensagem(){
     texto.value = '';
     console.log('mensagem enviada para o servidor');
 }
+
+function destruir(){
+    body.innerHTML = "";
+}

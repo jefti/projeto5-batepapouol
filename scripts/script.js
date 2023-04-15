@@ -17,7 +17,7 @@ let lista_teste = {};
 
 
 function outroNome(){
-    user.name = prompt('O primeiro nome falhou, insira outro nome:');
+    user.name = prompt('informe o seu nome por favor:');
     const requisicao2 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants',user);
     requisicao2.then(resposta);
     requisicao2.catch(outroNome);
@@ -134,7 +134,6 @@ function fale(resposta){
 }
 
 function falhaMensagem(){
-    alert('Houve um problema no servidor que desligou o usuario, por favor refaça o login');
     window.location.reload();
 }
 
@@ -147,5 +146,30 @@ function enviarMensagem(){
 }
 
 function destruir(){
-    body.innerHTML = "";
+    let topo = document.querySelector('.header');
+    let contente = document.querySelector('.conteudo');
+    let baixo = document.querySelector('.input_box');
+    topo.innerHTML = "";
+    contente.innerHTML = "";
+    baixo.innerHTML = "";
+}
+
+function construir(){
+    let pagina = document.querySelector('body');
+    pagina.innerHTML = `
+    <div class="header flex_box">
+        <img src="./imagens/logo.jpg" alt="logo" srcset="">
+        <ion-icon name="people"></ion-icon>
+    </div>
+    <div class="conteudo">
+        Conectando ...
+
+    </div>
+
+
+    <div class="input_box">
+      <input data-test ="input-message" class="caixa_texto" type="text" placeholder="Escreva aqui...">
+      <ion-icon data-test="send-message" name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>
+    </div>
+    `;
 }

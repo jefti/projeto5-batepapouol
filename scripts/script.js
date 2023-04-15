@@ -1,5 +1,7 @@
 //1. CAdastramos as informações necessárias para contatar o Servidor:
 axios.defaults.headers.common['Authorization'] = 'dVY1sNGArXuoHRdyAyWGnZGb';
+let senha ='';
+let chavesMensagens ='';    
 
 //2 O usuario tenta logar com seu proprio nome
 const user = {name: prompt('informe o seu nome por favor:')};
@@ -8,8 +10,7 @@ requisicao.then(resposta);
 requisicao.catch(outroNome);
 
 //3 manter o contato com o servidor para confirmar status e resetar tela
-const senha = setInterval(confirmarlogin, 5000);
-const chavesMensagens = setInterval(pegarMensagens, 3000);
+
 
 let objeto_teste = {} ;
 let lista_teste = {};
@@ -27,7 +28,10 @@ function outroNome(){
     //se falso voltamos ao começo
 }
 
-
+function iniciarChat(){
+    senha = setInterval(confirmarlogin, 5000);
+    chavesMensagens = setInterval(pegarMensagens, 3000);
+}
 
 
 document.addEventListener("keypress", function(e){
@@ -49,6 +53,7 @@ function confirmarlogin(){
 
 function resposta(response){
     console.log(`Servidor enviou resposta: ${response}`);
+    iniciarChat()
     pegarMensagens();
 }
 
